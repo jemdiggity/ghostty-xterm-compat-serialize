@@ -26,3 +26,9 @@ To use a local Ghostty checkout instead of the pinned fork commit:
 ```bash
 export GHOSTTY_SOURCE_DIR=/path/to/ghostty
 ```
+
+## TODO
+
+- Add CI for Rust and Node compatibility checks
+- Publish crate-level API docs with usage examples
+- Test-drive Kanna integration against real reconnect flows
