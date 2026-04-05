@@ -1,0 +1,10 @@
+{
+  "name": "focus_plus_normal_mouse",
+  "description": "Focus reporting and normal mouse tracking should serialize in xterm-compatible order",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[?1004h\u001b[?1000hA"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "cursor_shape_only",
+  "description": "Prompt content with a non-default cursor shape but visible cursor",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[6 qshape only› test"
+    }
+  ]
+}

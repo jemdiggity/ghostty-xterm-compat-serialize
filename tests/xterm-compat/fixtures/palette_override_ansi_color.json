@@ -1,0 +1,10 @@
+{
+  "name": "palette_override_ansi_color",
+  "description": "OSC 4 palette overrides should still serialize as ANSI color indices like xterm",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b]4;1;rgb:12/34/56\u001b\\\u001b[31mabc"
+    }
+  ]
+}

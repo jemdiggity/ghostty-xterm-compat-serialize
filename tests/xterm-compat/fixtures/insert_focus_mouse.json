@@ -1,0 +1,10 @@
+{
+  "name": "insert_focus_mouse",
+  "description": "Insert mode should serialize before focus and mouse tracking modes",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[4h\u001b[?1004h\u001b[?1000hA"
+    }
+  ]
+}

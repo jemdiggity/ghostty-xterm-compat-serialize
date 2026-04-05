@@ -1,0 +1,10 @@
+{
+  "name": "less_small_file_open",
+  "description": "Captured PTY output from opening a small file in less and stopping at the initial END screen",
+  "chunks": [
+    {
+      "delayMs": 4,
+      "data": "\u001b[?1049h\u001b[24;1H\u001b[?1h\u001b=\rone\u001b[m\r\ntwo\u001b[m\r\nthree\u001b[m\r\n\u001b[7m/tmp/xterm-less-sample.txt (END)\u001b[27m\u001b[K"
+    }
+  ]
+}

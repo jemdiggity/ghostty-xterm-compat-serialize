@@ -1,0 +1,10 @@
+{
+  "name": "button_plus_sgr_mouse",
+  "description": "SGR mouse encoding should not add extra serialized state beyond button-event mouse tracking",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[?1002h\u001b[?1006hA"
+    }
+  ]
+}

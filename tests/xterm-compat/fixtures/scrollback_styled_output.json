@@ -1,0 +1,10 @@
+{
+  "name": "scrollback_styled_output",
+  "description": "Styled scrollback output that exceeds the viewport height",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[48;2;57;57;57m01 alpha\u001b[0m\r\n\u001b[48;2;57;57;57m02 bravo\u001b[0m\r\n\u001b[48;2;57;57;57m03 charlie\u001b[0m\r\n\u001b[48;2;57;57;57m04 delta\u001b[0m\r\n\u001b[48;2;57;57;57m05 echo\u001b[0m\r\n\u001b[48;2;57;57;57m06 foxtrot\u001b[0m\r\n\u001b[48;2;57;57;57m07 golf\u001b[0m\r\n\u001b[48;2;57;57;57m08 hotel\u001b[0m\r\n\u001b[48;2;57;57;57m09 india\u001b[0m\r\n\u001b[48;2;57;57;57m10 juliet\u001b[0m\r\n\u001b[48;2;57;57;57m11 kilo\u001b[0m\r\n\u001b[48;2;57;57;57m12 lima\u001b[0m\r\n\u001b[48;2;57;57;57m13 mike\u001b[0m\r\n\u001b[48;2;57;57;57m14 november\u001b[0m\r\n\u001b[48;2;57;57;57m15 oscar\u001b[0m\r\n\u001b[48;2;57;57;57m16 papa\u001b[0m\r\n\u001b[48;2;57;57;57m17 quebec\u001b[0m\r\n\u001b[48;2;57;57;57m18 romeo\u001b[0m\r\n\u001b[48;2;57;57;57m19 sierra\u001b[0m\r\n\u001b[48;2;57;57;57m20 tango\u001b[0m\r\n\u001b[48;2;57;57;57m21 uniform\u001b[0m\r\n\u001b[48;2;57;57;57m22 victor\u001b[0m\r\n\u001b[48;2;57;57;57m23 whiskey\u001b[0m\r\n\u001b[48;2;57;57;57m24 xray\u001b[0m\r\n\u001b[48;2;57;57;57m25 yankee\u001b[0m\r\n\u001b[48;2;57;57;57m26 zulu\u001b[0m\r\n\u001b[48;2;57;57;57m› styled\u001b[0m"
+    }
+  ]
+}

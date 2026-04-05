@@ -1,0 +1,10 @@
+{
+  "name": "decset_1048_restore_hidden_cursor",
+  "description": "DECSET 1048 save/restore should preserve hidden cursor state from the saved position",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "abc\u001b[?25l\u001b[?1048h\r\nZ\u001b[?25h\u001b[?1048l"
+    }
+  ]
+}

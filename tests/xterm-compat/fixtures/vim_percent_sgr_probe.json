@@ -1,0 +1,10 @@
+{
+  "name": "vim_percent_sgr_probe",
+  "description": "Probe the Vim startup CSI percent-SGR sequence that Ghostty currently warns about",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001bPzz\u001b\\\u001b[0%m\u001b[1;1Halpha\r\nbeta\r\ngamma\r\n\u001b[94m~\r\n"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "normal_mouse_active",
+  "description": "Normal mouse tracking should be preserved in serialized state",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[?1000hA"
+    }
+  ]
+}

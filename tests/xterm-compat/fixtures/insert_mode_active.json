@@ -1,0 +1,10 @@
+{
+  "name": "insert_mode_active",
+  "description": "Active ANSI insert mode should be preserved in serialized state",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "abc\u001b[4h\rX"
+    }
+  ]
+}

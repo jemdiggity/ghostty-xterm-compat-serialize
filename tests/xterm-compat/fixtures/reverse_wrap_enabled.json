@@ -1,0 +1,10 @@
+{
+  "name": "reverse_wrap_enabled",
+  "description": "Content with reverse-wraparound mode enabled",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[?45habc"
+    }
+  ]
+}

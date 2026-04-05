@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@xterm/addon-serialize": "0.15.0-beta.195",
+    "@xterm/headless": "6.1.0-beta.195",
+    "@xterm/xterm": "6.1.0-beta.195"
+  }
+}

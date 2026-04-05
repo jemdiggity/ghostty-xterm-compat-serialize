@@ -1,0 +1,10 @@
+{
+  "name": "normal_plus_sgr_mouse",
+  "description": "SGR mouse encoding should not add extra serialized state beyond normal mouse tracking",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[?1000h\u001b[?1006hA"
+    }
+  ]
+}

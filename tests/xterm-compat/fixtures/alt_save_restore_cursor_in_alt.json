@@ -1,0 +1,10 @@
+{
+  "name": "alt_save_restore_cursor_in_alt",
+  "description": "Alternate screen with saved and restored cursor position inside the alt buffer",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "main\u001b[?1049hALT\u001b7\u001b[2;5HXY\u001b8"
+    }
+  ]
+}

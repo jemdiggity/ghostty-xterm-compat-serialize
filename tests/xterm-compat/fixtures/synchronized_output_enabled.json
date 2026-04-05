@@ -1,0 +1,10 @@
+{
+  "name": "synchronized_output_enabled",
+  "description": "Content with synchronized output mode enabled",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[?2026habc"
+    }
+  ]
+}

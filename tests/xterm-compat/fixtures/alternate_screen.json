@@ -1,0 +1,14 @@
+{
+  "name": "alternate_screen",
+  "description": "Primary screen content preserved while alternate screen remains active",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "primary one\r\nprimary two"
+    },
+    {
+      "delayMs": 0,
+      "data": "\u001b[?1049h\u001b[Halt view"
+    }
+  ]
+}

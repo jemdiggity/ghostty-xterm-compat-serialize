@@ -1,0 +1,14 @@
+{
+  "name": "multiline_output",
+  "description": "Multi-line answer body with prompt return",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\r\nAmong G7 countries, Japan is often one of the cheapest overall once you compare rent, transit, and daily costs outside the most expensive neighborhoods.\r\n"
+    },
+    {
+      "delayMs": 50,
+      "data": "› what's the cheapest country to live in in the g7"
+    }
+  ]
+}

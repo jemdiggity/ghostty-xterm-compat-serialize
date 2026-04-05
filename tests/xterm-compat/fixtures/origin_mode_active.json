@@ -1,0 +1,10 @@
+{
+  "name": "origin_mode_active",
+  "description": "Content with origin mode active inside a non-default scrolling region",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[2;4r\u001b[?6h\u001b[1;1Horigin"
+    }
+  ]
+}

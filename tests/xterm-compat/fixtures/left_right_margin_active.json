@@ -1,0 +1,10 @@
+{
+  "name": "left_right_margin_active",
+  "description": "Content with left/right margin mode and non-default margins active",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[?69h\u001b[3;7s\u001b[1;3Hboxed"
+    }
+  ]
+}

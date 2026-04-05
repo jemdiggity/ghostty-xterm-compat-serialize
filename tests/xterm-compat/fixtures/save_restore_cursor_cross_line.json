@@ -1,0 +1,10 @@
+{
+  "name": "save_restore_cursor_cross_line",
+  "description": "Save/restore cursor should restore cursor position across lines",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "abc\u001b7\r\nZ\u001b8"
+    }
+  ]
+}

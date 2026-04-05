@@ -1,0 +1,20 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "dependencies": {
+        "@xterm/addon-serialize": "0.15.0-beta.195",
+        "@xterm/headless": "6.1.0-beta.195",
+        "@xterm/xterm": "6.1.0-beta.195",
+      },
+    },
+  },
+  "packages": {
+    "@xterm/addon-serialize": ["@xterm/addon-serialize@0.15.0-beta.195", "", { "peerDependencies": { "@xterm/xterm": "^6.1.0-beta.195" } }, "sha512-BKlEQ5cao0J8sLvtFU/kmc4LAkAS+2JkblVIEu/FFHWUsuEaA4yZz4BtZrWBhql2JRfOq62hZFrqahZ0ViuZgA=="],
+
+    "@xterm/headless": ["@xterm/headless@6.1.0-beta.195", "", {}, "sha512-sUOeZ08431n5wx6ukrQ96eXEGN7z8swUfvHkl4nAEqpYEMxS/ua+E6v5PGT6fpQFbOt2R3zIm6LDIfy9GX24mA=="],
+
+    "@xterm/xterm": ["@xterm/xterm@6.1.0-beta.195", "", {}, "sha512-lLVfI3T4pX4W4qrbf2Qhdq5Pa00FkOOUz9vlOm6f1r5wel1mUafeJL8zacfsUVdc03MsCKHRyZkLubmDEnabcw=="],
+  }
+}

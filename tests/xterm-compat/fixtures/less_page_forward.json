@@ -1,0 +1,14 @@
+{
+  "name": "less_page_forward",
+  "description": "Captured PTY output from opening a file in less and paging forward once",
+  "chunks": [
+    {
+      "delayMs": 6,
+      "data": "\u001b[?1049h\u001b[24;1H\u001b[?1h\u001b=\rline 01\u001b[m\r\nline 02\u001b[m\r\nline 03\u001b[m\r\nline 04\u001b[m\r\nline 05\u001b[m\r\nline 06\u001b[m\r\nline 07\u001b[m\r\nline 08\u001b[m\r\nline 09\u001b[m\r\nline 10\u001b[m\r\nline 11\u001b[m\r\nline 12\u001b[m\r\nline 13\u001b[m\r\nline 14\u001b[m\r\nline 15\u001b[m\r\nline 16\u001b[m\r\nline 17\u001b[m\r\nline 18\u001b[m\r\nline 19\u001b[m\r\nline 20\u001b[m\r\nline 21\u001b[m\r\nline 22\u001b[m\r\nline 23\u001b[m\r\n\u001b[7m/tmp/xterm-less-paged.txt\u001b[27m\u001b[K"
+    },
+    {
+      "delayMs": 205,
+      "data": "\r\u001b[Kline 24\u001b[m\r\nline 25\u001b[m\r\nline 26\u001b[m\r\nline 27\u001b[m\r\nline 28\u001b[m\r\nline 29\u001b[m\r\nline 30\u001b[m\r\nline 31\u001b[m\r\nline 32\u001b[m\r\nline 33\u001b[m\r\nline 34\u001b[m\r\nline 35\u001b[m\r\nline 36\u001b[m\r\nline 37\u001b[m\r\nline 38\u001b[m\r\nline 39\u001b[m\r\nline 40\u001b[m\r\nline 41\u001b[m\r\nline 42\u001b[m\r\nline 43\u001b[m\r\nline 44\u001b[m\r\nline 45\u001b[m\r\nline 46\u001b[m\r\n:\u001b[K"
+    }
+  ]
+}

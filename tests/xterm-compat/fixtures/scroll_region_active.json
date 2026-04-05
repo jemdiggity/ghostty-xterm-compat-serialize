@@ -1,0 +1,14 @@
+{
+  "name": "scroll_region_active",
+  "description": "Content with a non-default scrolling region still active",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "top\r\nmid\r\nbottom"
+    },
+    {
+      "delayMs": 0,
+      "data": "\u001b[2;3r\u001b[3;1Hinside"
+    }
+  ]
+}

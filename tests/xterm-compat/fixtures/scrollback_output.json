@@ -1,0 +1,10 @@
+{
+  "name": "scrollback_output",
+  "description": "Plain scrollback output that exceeds the viewport height",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "01 alpha\r\n02 bravo\r\n03 charlie\r\n04 delta\r\n05 echo\r\n06 foxtrot\r\n07 golf\r\n08 hotel\r\n09 india\r\n10 juliet\r\n11 kilo\r\n12 lima\r\n13 mike\r\n14 november\r\n15 oscar\r\n16 papa\r\n17 quebec\r\n18 romeo\r\n19 sierra\r\n20 tango\r\n21 uniform\r\n22 victor\r\n23 whiskey\r\n24 xray\r\n25 yankee\r\n26 zulu\r\n› g7"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "decset_1048_restore_cursor",
+  "description": "DECSET 1048 save/restore should restore cursor position without switching screens",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "abc\u001b[?1048h\r\nZ\u001b[?1048l"
+    }
+  ]
+}

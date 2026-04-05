@@ -1,0 +1,10 @@
+{
+  "name": "wraparound_disabled",
+  "description": "Content with DECAWM disabled",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[?7labc"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "save_restore_with_style",
+  "description": "Save/restore cursor should restore both cursor position and active style",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b[31mabc\u001b7\u001b[32mZ\u001b8"
+    }
+  ]
+}

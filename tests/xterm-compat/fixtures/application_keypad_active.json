@@ -1,0 +1,10 @@
+{
+  "name": "application_keypad_active",
+  "description": "Application keypad mode should be preserved in serialized state",
+  "chunks": [
+    {
+      "delayMs": 0,
+      "data": "\u001b=1"
+    }
+  ]
+}
