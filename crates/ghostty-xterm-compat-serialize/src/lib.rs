@@ -44,6 +44,7 @@ struct SnapshotCell {
     chars: String,
     width: u16,
     style: Style,
+    hyperlink_uri: Option<String>,
 }
 
 #[derive(Clone, Debug)]
@@ -77,6 +78,7 @@ struct StringSerializeHandler {
     null_cell_count: usize,
     cursor_style: Style,
     background_style: Style,
+    active_hyperlink_uri: Option<String>,
     first_row: usize,
     last_cursor: CursorState,
     last_content_cursor: CursorState,
@@ -170,9 +172,15 @@ fn snapshot_rows(
                     chars,
                     width,
                     style,
+                    hyperlink_uri: if raw_cell.has_hyperlink()? {
+                        Some(String::new())
+                    } else {
+                        None
+                    },
                 });
             }
 
+            assign_visible_hyperlink_uris(&mut cells);
             rows.push(SnapshotRow {
                 is_wrap_continuation,
                 cells,
@@ -218,9 +226,15 @@ fn snapshot_rows(
                 chars,
                 width,
                 style,
+                hyperlink_uri: if cell.has_hyperlink()? {
+                    Some(String::new())
+                } else {
+                    None
+                },
             });
         }
 
+        assign_visible_hyperlink_uris(&mut cells);
         rows.push(SnapshotRow {
             is_wrap_continuation,
             cells,
@@ -228,6 +242,42 @@ fn snapshot_rows(
     }
 
     Ok(rows)
+}
+
+fn assign_visible_hyperlink_uris(cells: &mut [SnapshotCell]) {
+    let mut start = 0;
+
+    while start < cells.len() {
+        if cells[start].hyperlink_uri.is_none() {
+            start += 1;
+            continue;
+        }
+
+        let mut end = start;
+        let mut uri = String::new();
+        while end < cells.len() && cells[end].hyperlink_uri.is_some() {
+            uri.push_str(&cells[end].chars);
+            end += 1;
+        }
+
+        let uri = sanitize_hyperlink_uri(&uri);
+        for cell in &mut cells[start..end] {
+            cell.hyperlink_uri = uri.clone();
+        }
+        start = end;
+    }
+}
+
+fn sanitize_hyperlink_uri(uri: &str) -> Option<String> {
+    let sanitized: String = uri
+        .chars()
+        .filter(|ch| !matches!(ch, '\x00'..='\x1f' | '\x7f'))
+        .collect();
+    if sanitized.is_empty() {
+        None
+    } else {
+        Some(sanitized)
+    }
 }
 
 fn canonical_style_color(color: StyleColor, palette: &[RgbColor; 256]) -> StyleColor {
@@ -374,8 +424,16 @@ fn diff_style(current: Style, previous: Style, palette: &[RgbColor; 256]) -> Vec
         if current.inverse != previous.inverse {
             sgr.push(if current.inverse { "7" } else { "27" }.to_string());
         }
-        if current.bold != previous.bold {
-            sgr.push(if current.bold { "1" } else { "22" }.to_string());
+        if current.bold != previous.bold || current.faint != previous.faint {
+            if previous.bold || previous.faint || (!current.bold && !current.faint) {
+                sgr.push("22".to_string());
+            }
+            if current.bold {
+                sgr.push("1".to_string());
+            }
+            if current.faint {
+                sgr.push("2".to_string());
+            }
         }
         if !equal_underline(current, previous) {
             match underline_style_code(current.underline) {
@@ -415,9 +473,6 @@ fn diff_style(current: Style, previous: Style, palette: &[RgbColor; 256]) -> Vec
         if current.italic != previous.italic {
             sgr.push(if current.italic { "3" } else { "23" }.to_string());
         }
-        if current.faint != previous.faint {
-            sgr.push(if current.faint { "2" } else { "22" }.to_string());
-        }
         if current.strikethrough != previous.strikethrough {
             sgr.push(if current.strikethrough { "9" } else { "29" }.to_string());
         }
@@ -439,6 +494,7 @@ impl StringSerializeHandler {
             null_cell_count: 0,
             cursor_style: Style::default(),
             background_style: Style::default(),
+            active_hyperlink_uri: None,
             first_row: 0,
             last_cursor: CursorState::default(),
             last_content_cursor: CursorState::default(),
@@ -504,6 +560,9 @@ impl StringSerializeHandler {
         if !final_sgr.is_empty() {
             content.push_str(&format!("\x1b[{}m", final_sgr.join(";")));
         }
+        if self.active_hyperlink_uri.is_some() {
+            content.push_str("\x1b]8;;\x1b\\");
+        }
 
         Ok(content)
     }
@@ -515,25 +574,24 @@ impl StringSerializeHandler {
 
         let is_empty_cell = cell.chars.is_empty();
         let sgr_seq = diff_style(cell.style, self.cursor_style, &self.palette);
+        let hyperlink_changed = cell.hyperlink_uri != self.active_hyperlink_uri;
         let style_changed = if is_empty_cell {
             !equal_bg(self.cursor_style, cell.style, &self.palette)
         } else {
             !sgr_seq.is_empty()
         };
 
-        if style_changed {
-            if self.null_cell_count > 0 {
-                if !equal_bg(self.cursor_style, self.background_style, &self.palette) {
-                    self.current_row
-                        .push_str(&format!("\x1b[{}X", self.null_cell_count));
-                }
-                self.current_row
-                    .push_str(&format!("\x1b[{}C", self.null_cell_count));
-                self.null_cell_count = 0;
-            }
-
+        if style_changed || hyperlink_changed {
+            self.flush_null_cells();
             self.last_cursor = CursorState { row, col };
             self.last_content_cursor = self.last_cursor;
+        }
+
+        if hyperlink_changed {
+            self.push_hyperlink_transition(cell.hyperlink_uri.as_deref());
+        }
+
+        if style_changed {
             self.current_row
                 .push_str(&format!("\x1b[{}m", sgr_seq.join(";")));
             self.cursor_style = cell.style;
@@ -562,6 +620,34 @@ impl StringSerializeHandler {
             };
             self.last_content_cursor = self.last_cursor;
         }
+    }
+
+    fn flush_null_cells(&mut self) {
+        if self.null_cell_count == 0 {
+            return;
+        }
+
+        if !equal_bg(self.cursor_style, self.background_style, &self.palette) {
+            self.current_row
+                .push_str(&format!("\x1b[{}X", self.null_cell_count));
+        }
+        self.current_row
+            .push_str(&format!("\x1b[{}C", self.null_cell_count));
+        self.null_cell_count = 0;
+    }
+
+    fn push_hyperlink_transition(&mut self, next_uri: Option<&str>) {
+        if self.active_hyperlink_uri.is_some() {
+            self.current_row.push_str("\x1b]8;;\x1b\\");
+        }
+
+        if let Some(uri) = next_uri {
+            self.current_row.push_str("\x1b]8;;");
+            self.current_row.push_str(uri);
+            self.current_row.push_str("\x1b\\");
+        }
+
+        self.active_hyperlink_uri = next_uri.map(ToOwned::to_owned);
     }
 
     fn row_end(&mut self, rows: &[SnapshotRow], row_index: usize, is_last_row: bool) {
@@ -644,6 +730,9 @@ impl StringSerializeHandler {
                     self.last_cursor = self.last_content_cursor;
                 }
             }
+        }
+        if self.active_hyperlink_uri.is_some() {
+            self.push_hyperlink_transition(None);
         }
 
         self.all_rows[row_index] = std::mem::take(&mut self.current_row);
@@ -879,14 +968,8 @@ pub fn serialize_terminal(
     if terminal.mode(Mode::KEYPAD_KEYS)? {
         serialized_candidate.push_str("\x1b[?66h");
     }
-    if terminal.mode(Mode::ANY_MOUSE)? {
-        // xterm orders the mouse-tracking suffix after bracketed paste and
-        // focus-reporting suffixes, so defer emission until after those.
-    } else if terminal.mode(Mode::BUTTON_MOUSE)? {
-        // see note above
-    } else if terminal.mode(Mode::NORMAL_MOUSE)? {
-        // see note above
-    }
+    // xterm orders the mouse-tracking suffix after bracketed paste and
+    // focus-reporting suffixes, so defer emission until after those.
     if terminal.mode(Mode::LEFT_RIGHT_MARGIN)? {
         serialized_candidate.push_str("\x1b[?69h");
     }
@@ -922,7 +1005,7 @@ pub fn serialize_terminal(
 pub fn run_fixture_by_name(
     fixture_name: &str,
 ) -> Result<SerializeOutput, Box<dyn std::error::Error>> {
-    let raw = fs::read_to_string(fixture_path(&fixture_name))?;
+    let raw = fs::read_to_string(fixture_path(fixture_name))?;
     let fixture: FixtureFile = serde_json::from_str(&raw)?;
     let mut terminal = Terminal::new(TerminalOptions {
         cols: 80,
@@ -936,4 +1019,55 @@ pub fn run_fixture_by_name(
     }
 
     serialize_terminal(&terminal, Some(&fixture.name))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn serialize_bytes(bytes: &[u8]) -> Result<String, Box<dyn std::error::Error>> {
+        let mut terminal = Terminal::new(TerminalOptions {
+            cols: 80,
+            rows: 24,
+            max_scrollback: 1000,
+        })?;
+        terminal.vt_write(bytes);
+        Ok(serialize_terminal(&terminal, None)?.serialized_candidate)
+    }
+
+    #[test]
+    fn emits_osc8_for_hyperlinked_cells() -> Result<(), Box<dyn std::error::Error>> {
+        let serialized = serialize_bytes(
+            b"\x1b[2J\x1b[Hbefore \x1b]8;;https://example.test/docs\x1b\\https://example.test/docs\x1b]8;;\x1b\\ after",
+        )?;
+
+        assert!(
+            serialized.contains(
+                "\x1b]8;;https://example.test/docs\x1b\\https://example.test/docs\x1b]8;;\x1b\\"
+            ),
+            "serialized output should preserve OSC-8 hyperlink state: {serialized:?}"
+        );
+
+        Ok(())
+    }
+
+    #[test]
+    fn preserves_bold_when_leaving_faint_style() -> Result<(), Box<dyn std::error::Error>> {
+        let serialized = serialize_bytes(
+            "\x1b[2J\x1b[H\x1b[2m│ >_ \x1b[22m\x1b[1mOpenAI Codex\x1b[22m\x1b[2m (v0.140.0) │"
+                .as_bytes(),
+        )?;
+
+        assert!(
+            serialized.contains("\x1b[22;1mOpenAI Codex")
+                || serialized.contains("\x1b[1mOpenAI Codex"),
+            "serialized output should preserve the bold title transition: {serialized:?}"
+        );
+        assert!(
+            !serialized.contains("\x1b[1;22mOpenAI Codex"),
+            "serialized output must not set bold before resetting faint: {serialized:?}"
+        );
+
+        Ok(())
+    }
 }
