@@ -1,0 +1,61 @@
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.45
+   Compiling unicode-ident v1.0.24
+   Compiling version_check v0.9.5
+   Compiling libghostty-vt-sys v0.1.1 (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/repos/libghostty-rs/crates/libghostty-vt-sys)
+   Compiling bitflags v2.11.0
+   Compiling proc-macro2-diagnostics v0.10.1
+   Compiling syn v2.0.117
+   Compiling int-enum v1.2.0
+warning: function `parse_header_symbols` is never used
+   --> crates/libghostty-vt-sys/src/lib.rs:275:8
+    |
+275 |     fn parse_header_symbols(input: &str) -> BTreeSet<String> {
+    |        ^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling libghostty-vt v0.1.1 (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/repos/libghostty-rs/crates/libghostty-vt)
+warning: `libghostty-vt-sys` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 46.83s
+     Running unittests src/lib.rs (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/cargo-fetch/debug/deps/libghostty_vt-1b22e42da6be4efb)
+
+running 3 tests
+test style::tests::rgb_background_style_is_not_default ... ok
+test terminal::tests::screen_specific_getters_return_none_for_missing_alternate ... ok
+test terminal::tests::screen_grid_ref_reads_inactive_primary_and_active_alternate ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/cargo-fetch/debug/deps/libghostty_vt_sys-29adb7f7fa9225f4)
+
+running 2 tests
+test tests::exported_manifest_is_sorted_and_unique ... ok
+test tests::exported_manifest_matches_bindings ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests libghostty_vt
+
+running 11 tests
+test crates/libghostty-vt/src/build_info.rs - build_info (line 6) ... ok
+test crates/libghostty-vt/src/paste.rs - paste (line 24) ... ok
+test crates/libghostty-vt/src/focus.rs - focus (line 12) ... ok
+test crates/libghostty-vt/src/sgr.rs - sgr::Parser (line 24) ... ok
+test crates/libghostty-vt/src/paste.rs - paste (line 7) ... ok
+test crates/libghostty-vt/src/render.rs - render::RenderState (line 125) ... ok
+test crates/libghostty-vt/src/render.rs - render::RenderState (line 79) ... ok
+test crates/libghostty-vt/src/render.rs - render::RenderState (line 100) ... ok
+test crates/libghostty-vt/src/render.rs - render::RenderState (line 55) ... ok
+test crates/libghostty-vt/src/terminal.rs - terminal::Terminal (line 63) ... ok
+test crates/libghostty-vt/src/render.rs - render::RenderState (line 147) ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 1 test
+test crates/libghostty-vt/src/terminal.rs - terminal::handlers (line 1021) ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+all doctests ran in 0.48s; merged doctests compilation took 0.26s
