@@ -996,7 +996,9 @@ pub fn serialize_terminal(
 
 fn new_terminal() -> Result<Terminal<'static, 'static>, GhosttyError> {
     let mut terminal = Terminal::new(80, 24)?;
-    terminal.set_scrollback_max_lines(Some(1000))?;
+    // Matches the previous `max_scrollback: 1000`, which Ghostty applied as a
+    // byte limit (page-granular) with no line limit.
+    terminal.set_scrollback_max_bytes(Some(1000))?;
     Ok(terminal)
 }
 
@@ -1023,6 +1025,16 @@ mod tests {
         let mut terminal = new_terminal()?;
         terminal.vt_write(bytes);
         Ok(serialize_terminal(&terminal, None)?.serialized_candidate)
+    }
+
+    #[test]
+    fn retains_scrollback_past_one_thousand_lines() -> Result<(), Box<dyn std::error::Error>> {
+        let input: String = (0..1024).map(|i| format!("line{i:05}\r\n")).collect();
+        let serialized = serialize_bytes(input.as_bytes())?;
+
+        assert!(serialized.contains("line00000"));
+        assert!(serialized.contains("line01023"));
+        Ok(())
     }
 
     #[test]
