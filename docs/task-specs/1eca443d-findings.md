@@ -1,5 +1,19 @@
 # Zig 0.16 paired dependency upgrade — task 1eca443d
 
+> **Superseded (2026-09-25).** The commits in the publication gate below were
+> never published. Both forks were instead refreshed onto current upstream and
+> published, and the serializer now pins the refreshed pair:
+>
+> | Fork | Published branch | Commit | Parent |
+> | --- | --- | --- | --- |
+> | `jemdiggity/ghostty` | `jemdiggity/zig016-screen-api` | `1f61d9644f42eb1949cf955d61b9bcec41ae22ce` | upstream `1a9edb0009a7e4fd87d2eca5d61386ce0c2b7e9d` |
+> | `jemdiggity/libghostty-rs` | `jemdiggity/zig016-xterm-compat` | `66a7be5c56b883ee80bccde4b0f2ef619e488370` | `Uzaaft/libghostty-rs` `5988a0b78b4aa804d1c12e66bbfe662bd97d81c0` |
+>
+> Upstream `libghostty-rs` already supports Zig 0.16, so the wrapper commit only
+> adds the screen-specific accessors, the fork pin, regenerated bindings
+> (signed C enums → `repr(i32)`) and the `render_state_get` colors call. The
+> rest of this document records the earlier verification and is kept for history.
+
 Verified on the Mac Studio, 2026-09-23. The current Ghostty + wrapper pair
 builds with official Zig 0.16.0 against Xcode 27 / macOS SDK 27.0. Serializer
 source changes are unnecessary; its production manifests and lockfiles remain

@@ -8,6 +8,6 @@ rust-version.workspace = true
 description = "xterm-compatible serialize output for libghostty-vt terminals"
 
 [dependencies]
-libghostty-vt = { git = "https://github.com/jemdiggity/libghostty-rs.git", rev = "61ae57d7b42821e1b19ad325abc7ff49c80fc880", package = "libghostty-vt" }
+libghostty-vt = { git = "https://github.com/jemdiggity/libghostty-rs.git", rev = "66a7be5c56b883ee80bccde4b0f2ef619e488370", package = "libghostty-vt" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

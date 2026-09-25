@@ -1,12 +1,11 @@
 use libghostty_vt::{
     error::Error as GhosttyError,
-    ffi,
-    fmt::{Format, Formatter, FormatterExtra, FormatterOptions},
+    fmt::{Format, Formatter, FormatterOptions},
     render::{CellIterator, RenderState, RowIterator},
-    screen::{Cell, CellContentTag, CellWide},
+    screen::{Cell, CellContentTag, CellWide, Screen},
     style::{PaletteIndex, RgbColor, Style, StyleColor, Underline},
     terminal::{Mode, Point, PointCoordinate},
-    Terminal, TerminalOptions,
+    Terminal,
 };
 use serde::{Deserialize, Serialize};
 use std::{fs, path::PathBuf};
@@ -125,14 +124,11 @@ fn style_for_cell(
 
 fn snapshot_rows(
     terminal: &Terminal<'_, '_>,
-    screen: ffi::TerminalScreen::Type,
+    screen: Screen,
 ) -> Result<Vec<SnapshotRow>, GhosttyError> {
-    let total_rows = match screen {
-        ffi::TerminalScreen::PRIMARY => terminal.screen_total_rows(screen)?,
-        ffi::TerminalScreen::ALTERNATE => terminal.screen_total_rows(screen)?,
-        _ => None,
-    }
-    .ok_or(GhosttyError::InvalidValue)?;
+    let total_rows = terminal
+        .screen_total_rows(screen)?
+        .ok_or(GhosttyError::InvalidValue)?;
     let cols = usize::from(terminal.cols()?);
     if screen == terminal.active_screen()? && total_rows == usize::from(terminal.rows()?) {
         let mut render_state = RenderState::new()?;
@@ -743,7 +739,7 @@ impl StringSerializeHandler {
 
 fn screen_cursor_meta(
     terminal: &Terminal<'_, '_>,
-    screen: ffi::TerminalScreen::Type,
+    screen: Screen,
 ) -> Result<Option<ScreenCursorMeta>, GhosttyError> {
     let scrollback_rows = terminal.screen_scrollback_rows(screen)?;
     let cursor_x = terminal.screen_cursor_x(screen)?;
@@ -766,7 +762,7 @@ fn screen_cursor_meta(
 
 fn serialize_screen(
     terminal: &Terminal<'_, '_>,
-    screen: ffi::TerminalScreen::Type,
+    screen: Screen,
 ) -> Result<Option<String>, GhosttyError> {
     let total_rows = match terminal.screen_total_rows(screen)? {
         Some(total_rows) => total_rows,
@@ -779,7 +775,7 @@ fn serialize_screen(
             usize::from(terminal.cols()?),
             usize::from(terminal.rows()?),
             total_rows,
-            terminal.color_palette()?,
+            terminal.color_palette()?.0,
         )
         .serialize(&rows, cursor)?,
     ))
@@ -817,15 +813,11 @@ fn scrolling_region_suffix(
 ) -> Result<String, Box<dyn std::error::Error>> {
     let mut formatter = Formatter::new(
         terminal,
-        FormatterOptions {
-            format: Format::Vt,
-            trim: true,
-            unwrap: true,
-            extra: FormatterExtra {
-                scrolling_region: true,
-                ..FormatterExtra::default()
-            },
-        },
+        FormatterOptions::new()
+            .with_format(Format::Vt)
+            .with_trim(true)
+            .with_unwrap(true)
+            .with_scrolling_region(true),
     )?;
     let len = formatter.format_len()?;
     let mut formatted = vec![0u8; len];
@@ -931,17 +923,17 @@ pub fn serialize_terminal(
     let mut serialized_candidate = String::new();
     let active = serialize_screen(terminal, active_screen)?;
 
-    if active_screen == ffi::TerminalScreen::ALTERNATE {
-        if let Some(primary) = serialize_screen(terminal, ffi::TerminalScreen::PRIMARY)? {
+    if active_screen == Screen::Alternate {
+        if let Some(primary) = serialize_screen(terminal, Screen::Primary)? {
             serialized_candidate.push_str(&primary);
         }
         if let Some(active) = active.as_deref() {
             let (_, remainder) = split_leading_sgr_prefix(active);
             if !remainder.is_empty() {
-                let active_cursor = screen_cursor_meta(terminal, ffi::TerminalScreen::ALTERNATE)?
+                let active_cursor = screen_cursor_meta(terminal, Screen::Alternate)?
                     .ok_or(GhosttyError::InvalidValue)?;
                 if let Some(prefix) =
-                    style_prefix(active_cursor.cursor_style, &terminal.color_palette()?)
+                    style_prefix(active_cursor.cursor_style, &terminal.color_palette()?.0)
                 {
                     serialized_candidate.push_str(&prefix);
                 }
@@ -1002,16 +994,18 @@ pub fn serialize_terminal(
     })
 }
 
+fn new_terminal() -> Result<Terminal<'static, 'static>, GhosttyError> {
+    let mut terminal = Terminal::new(80, 24)?;
+    terminal.set_scrollback_max_lines(Some(1000))?;
+    Ok(terminal)
+}
+
 pub fn run_fixture_by_name(
     fixture_name: &str,
 ) -> Result<SerializeOutput, Box<dyn std::error::Error>> {
     let raw = fs::read_to_string(fixture_path(fixture_name))?;
     let fixture: FixtureFile = serde_json::from_str(&raw)?;
-    let mut terminal = Terminal::new(TerminalOptions {
-        cols: 80,
-        rows: 24,
-        max_scrollback: 1000,
-    })?;
+    let mut terminal = new_terminal()?;
 
     for chunk in &fixture.chunks {
         let normalized = normalize_xterm_sgr_compat_input(&chunk.data);
@@ -1026,11 +1020,7 @@ mod tests {
     use super::*;
 
     fn serialize_bytes(bytes: &[u8]) -> Result<String, Box<dyn std::error::Error>> {
-        let mut terminal = Terminal::new(TerminalOptions {
-            cols: 80,
-            rows: 24,
-            max_scrollback: 1000,
-        })?;
+        let mut terminal = new_terminal()?;
         terminal.vt_write(bytes);
         Ok(serialize_terminal(&terminal, None)?.serialized_candidate)
     }

@@ -46,8 +46,8 @@ checksum = "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682"
 
 [[package]]
 name = "libghostty-vt"
-version = "0.1.1"
-source = "git+https://github.com/jemdiggity/libghostty-rs.git?rev=61ae57d7b42821e1b19ad325abc7ff49c80fc880#61ae57d7b42821e1b19ad325abc7ff49c80fc880"
+version = "0.2.1"
+source = "git+https://github.com/jemdiggity/libghostty-rs.git?rev=66a7be5c56b883ee80bccde4b0f2ef619e488370#66a7be5c56b883ee80bccde4b0f2ef619e488370"
 dependencies = [
  "bitflags",
  "int-enum",
@@ -56,8 +56,8 @@ dependencies = [
 
 [[package]]
 name = "libghostty-vt-sys"
-version = "0.1.1"
-source = "git+https://github.com/jemdiggity/libghostty-rs.git?rev=61ae57d7b42821e1b19ad325abc7ff49c80fc880#61ae57d7b42821e1b19ad325abc7ff49c80fc880"
+version = "0.2.1"
+source = "git+https://github.com/jemdiggity/libghostty-rs.git?rev=66a7be5c56b883ee80bccde4b0f2ef619e488370#66a7be5c56b883ee80bccde4b0f2ef619e488370"
 
 [[package]]
 name = "memchr"
