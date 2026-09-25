@@ -1,0 +1,51 @@
+     Locking 2 packages to latest compatible versions
+      Adding libghostty-vt v0.1.1 (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/repos/libghostty-rs/crates/libghostty-vt)
+      Adding libghostty-vt-sys v0.1.1 (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/repos/libghostty-rs/crates/libghostty-vt-sys)
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.45
+   Compiling version_check v0.9.5
+   Compiling serde_core v1.0.228
+   Compiling libghostty-vt-sys v0.1.1 (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/repos/libghostty-rs/crates/libghostty-vt-sys)
+   Compiling zmij v1.0.21
+   Compiling serde_json v1.0.149
+   Compiling serde v1.0.228
+   Compiling bitflags v2.11.0
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.0
+   Compiling proc-macro2-diagnostics v0.10.1
+   Compiling syn v2.0.117
+   Compiling serde_derive v1.0.228
+   Compiling int-enum v1.2.0
+   Compiling libghostty-vt v0.1.1 (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/repos/libghostty-rs/crates/libghostty-vt)
+   Compiling ghostty-xterm-compat-serialize v0.1.0 (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/serializer/crates/ghostty-xterm-compat-serialize)
+   Compiling ghostty-xterm-compat-runner v0.1.0 (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/serializer/tests/xterm-compat/ghostty-runner)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.57s
+     Running unittests src/main.rs (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/cargo-serializer/debug/deps/ghostty_xterm_compat_runner-fa91bcc50444efc1)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ghostty_runner.rs (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/cargo-serializer/debug/deps/ghostty_runner-eb1f3891f681710b)
+
+running 2 tests
+test startup_prompt_fixture_produces_json_metadata ... ok
+test prompt_redraw_fixture_matches_xterm_reference_shape ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running unittests src/lib.rs (/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/cargo-serializer/debug/deps/ghostty_xterm_compat_serialize-24de67d09b7668fc)
+
+running 2 tests
+test tests::preserves_bold_when_leaving_faint_style ... ok
+test tests::emits_osc8_for_hyperlinked_cells ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+   Doc-tests ghostty_xterm_compat_serialize
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

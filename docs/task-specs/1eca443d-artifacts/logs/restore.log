@@ -1,0 +1,22 @@
+Cloning into '/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/reproduce-1eca443d/ghostty'...
+From https://github.com/ghostty-org/ghostty
+ * branch                622b4eecd7d2ce1a10930537c17f0d61abdba817 -> FETCH_HEAD
+/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/docs/task-specs/1eca443d-artifacts/ghostty.bundle is okay
+The bundle contains this ref:
+cd43c78ecc559dc82bf65aee332e4911b19a8d03 refs/heads/task/zig016
+The bundle requires this ref:
+622b4eecd7d2ce1a10930537c17f0d61abdba817 
+The bundle uses this hash algorithm: sha1
+From /Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/docs/task-specs/1eca443d-artifacts/ghostty.bundle
+ * branch                task/zig016 -> FETCH_HEAD
+HEAD is now at cd43c78ec vt: preserve screen-specific accessors on Zig 0.16
+Cloning into '/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/.tmp/reproduce-1eca443d/libghostty-rs'...
+/Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/docs/task-specs/1eca443d-artifacts/libghostty-rs.bundle is okay
+The bundle contains this ref:
+f59a104ad6512e2ba8809dd5f37e46c96f01e740 refs/heads/task/zig016
+The bundle requires this ref:
+61ae57d7b42821e1b19ad325abc7ff49c80fc880 
+The bundle uses this hash algorithm: sha1
+From /Users/jeremyhale/.kanna/repos/ghostty-xterm-compat-serialize/.kanna-worktrees/task-1eca443d/docs/task-specs/1eca443d-artifacts/libghostty-rs.bundle
+ * branch            task/zig016 -> FETCH_HEAD
+HEAD is now at f59a104 compat: pair libghostty-vt with Zig 0.16 and current Ghostty

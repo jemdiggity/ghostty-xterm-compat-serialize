@@ -1,0 +1,6 @@
+00000000003c3b74 T _ghostty_terminal_screen_get
+000000000035a5d4 T _ghostty_terminal_screen_grid_ref
+.tmp/out/lib-vt/lib/libghostty-vt.0.1.0.dylib:
+	@rpath/libghostty-vt.dylib (compatibility version 1.0.0, current version 0.1.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.0.0)
+.tmp/repos/ghostty/.zig-cache/o/3ec505f2d968f6eb8c38c65f27bd8b6f/libc.txt:sys_include_dir=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk/usr/include
